@@ -1,0 +1,12 @@
+[Unit]
+Description=Replug a display in software when it comes back with modes missing
+After=systemd-udevd.service
+
+[Service]
+EnvironmentFile=/etc/drm-replug.conf
+ExecStart=/usr/local/bin/drm-replug watch ${CONNECTOR} ${MODE}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target
