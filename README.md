@@ -48,6 +48,21 @@ echo detect | sudo tee /sys/class/drm/card1-HDMI-A-1/status
 settles (10 s), it checks whether the connector offers the mode you expect and
 replugs it if not, at most three times per connection.
 
+## Alternative: keep the connector forced on
+
+If the monitor drops hotplug whenever it switches to another input (a KVM
+setup), forcing the connector on may be the better fix: the compositor never
+sees the display leave, and the mode list built at boot stays. A udev rule
+does it at boot:
+
+```
+ACTION=="add", SUBSYSTEM=="drm", ENV{DEVTYPE}=="drm_connector", KERNEL=="card*-HDMI-A-1", ATTR{status}="on"
+```
+
+`echo detect` to the `status` file undoes it. The trade-off: the display is
+never probed again until reboot, so a different monitor on that port keeps the
+old modes.
+
 ## Install
 
 ```sh
