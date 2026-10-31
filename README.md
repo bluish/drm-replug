@@ -68,6 +68,10 @@ ACTION=="add", SUBSYSTEM=="drm", ENV{DEVTYPE}=="drm_connector", KERNEL=="card*-H
   mode again and the HDMI 2.1 link isn't rebuilt. Seen with the monitor turning
   itself off overnight.
 
+If the reason to keep the connector on is the screen locker dying on Hyprland
+when the display leaves, [hyprland-lockfix](https://github.com/bluish/hyprland-lockfix)
+fixes that crash instead.
+
 ## Install
 
 ```sh
