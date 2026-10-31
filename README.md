@@ -59,9 +59,14 @@ does it at boot:
 ACTION=="add", SUBSYSTEM=="drm", ENV{DEVTYPE}=="drm_connector", KERNEL=="card*-HDMI-A-1", ATTR{status}="on"
 ```
 
-`echo detect` to the `status` file undoes it. The trade-off: the display is
-never probed again until reboot, so a different monitor on that port keeps the
-old modes.
+`echo detect` to the `status` file undoes it. The trade-offs:
+
+- The display is never probed again until reboot, so a different monitor on
+  that port keeps the old modes.
+- A power cycle can leave the screen black until reboot. Nothing above the
+  driver sees the display leave and come back, so the compositor never sets the
+  mode again and the HDMI 2.1 link isn't rebuilt. Seen with the monitor turning
+  itself off overnight.
 
 ## Install
 
